@@ -1,0 +1,901 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_dark">
+
+    <!-- ═══════════════════════════════════════════════════════
+         FUTURISTIC HEADER BAR (Branding + Status)
+         ═══════════════════════════════════════════════════════ -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="8dp"
+        android:background="#0A0E1A">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🎮 PS3"
+                android:textColor="@color/neon_cyan"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.06"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" CONTROLLER"
+                android:textColor="@color/text_primary"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.06"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" PRO"
+                android:textColor="@color/neon_purple"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:background="@drawable/bg_button_dark"
+                android:paddingHorizontal="6dp"
+                android:paddingVertical="2dp"
+                android:layout_marginStart="6dp"/>
+        </LinearLayout>
+
+        <!-- Status Badge -->
+        <TextView
+            android:id="@+id/tvConnectionStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_status_disconnected"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp"
+            android:text="🔴 Desconectado"
+            android:textColor="@color/neon_red"
+            android:textSize="11sp"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+    <!-- ═══════════════════════════════════════════════════════
+         TAB NAVIGATION SELECTOR
+         ═══════════════════════════════════════════════════════ -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="12dp"
+        android:paddingBottom="10dp"
+        android:scrollbars="none"
+        android:background="#0A0E1A">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/tabConsola"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="⚡ Consola"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="#0B0E17"
+                android:background="@drawable/bg_tab_selected"
+                app:backgroundTint="@null"
+                android:paddingHorizontal="14dp"
+                android:layout_marginEnd="6dp"/>
+
+            <Button
+                android:id="@+id/tabPkg"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="📦 PKG &amp; Juegos"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_secondary"
+                android:background="@drawable/bg_tab_unselected"
+                app:backgroundTint="@null"
+                android:paddingHorizontal="14dp"
+                android:layout_marginEnd="6dp"/>
+
+            <Button
+                android:id="@+id/tabFtp"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="📁 FTP Explorer"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_secondary"
+                android:background="@drawable/bg_tab_unselected"
+                app:backgroundTint="@null"
+                android:paddingHorizontal="14dp"
+                android:layout_marginEnd="6dp"/>
+
+            <Button
+                android:id="@+id/tabControls"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="⚙️ Controles"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_secondary"
+                android:background="@drawable/bg_tab_unselected"
+                app:backgroundTint="@null"
+                android:paddingHorizontal="14dp"/>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- ═══════════════════════════════════════════════════════
+         MAIN SCROLLABLE CONTENT
+         ═══════════════════════════════════════════════════════ -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:padding="14dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- ══════════════════════════════════════
+                 SECTION: CONSOLA (conexión + telemetría + energía)
+                 ══════════════════════════════════════ -->
+            <LinearLayout
+                android:id="@+id/layoutSectionConsole"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <!-- Connection Card -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card_glow"
+                    android:padding="18dp"
+                    android:layout_marginBottom="14dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🌐 Conexión a PS3"
+                        android:textColor="@color/neon_cyan"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="12dp"/>
+
+                    <EditText
+                        android:id="@+id/etPs3Ip"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:hint="IP de la PS3 (ej: 192.168.0.120)"
+                        android:text="192.168.0.120"
+                        android:textColor="@color/text_primary"
+                        android:textColorHint="@color/text_muted"
+                        android:background="@drawable/bg_input"
+                        android:paddingHorizontal="16dp"
+                        android:inputType="textUri"
+                        android:textSize="14sp"
+                        android:layout_marginBottom="10dp"/>
+
+                    <Button
+                        android:id="@+id/btnConnect"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="⚡ Conectar a PS3"
+                        android:background="@drawable/bg_button_cyan"
+                        app:backgroundTint="@null"
+                        android:textColor="#0B0E17"
+                        android:textStyle="bold"
+                        android:textSize="14sp"
+                        android:layout_marginBottom="10dp"/>
+
+                    <TextView
+                        android:id="@+id/tvConnectionFeedback"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Ingresa la IP de tu PS3 con webMAN/FTP habilitado."
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+
+                <!-- Telemetry Card -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card"
+                    android:padding="18dp"
+                    android:layout_marginBottom="14dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="14dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="📊 Telemetría del Sistema"
+                            android:textColor="@color/neon_cyan"
+                            android:textSize="15sp"
+                            android:textStyle="bold"/>
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/swAutoRefresh"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Auto 5s"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="11sp"/>
+                    </LinearLayout>
+
+                    <!-- 2x2 Telemetry Grid -->
+                    <GridLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:columnCount="2"
+                        android:rowCount="2">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_columnWeight="1"
+                            android:orientation="vertical"
+                            android:background="@drawable/bg_button_dark"
+                            android:padding="12dp"
+                            android:layout_margin="4dp"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="CPU Temp"
+                                android:textColor="@color/text_muted"
+                                android:textSize="10sp"/>
+                            <TextView
+                                android:id="@+id/tvCpuTemp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="🔥 -- °C"
+                                android:textColor="@color/text_primary"
+                                android:textSize="14sp"
+                                android:textStyle="bold"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_columnWeight="1"
+                            android:orientation="vertical"
+                            android:background="@drawable/bg_button_dark"
+                            android:padding="12dp"
+                            android:layout_margin="4dp"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="RSX Temp"
+                                android:textColor="@color/text_muted"
+                                android:textSize="10sp"/>
+                            <TextView
+                                android:id="@+id/tvRsxTemp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="⚡ -- °C"
+                                android:textColor="@color/text_primary"
+                                android:textSize="14sp"
+                                android:textStyle="bold"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_columnWeight="1"
+                            android:orientation="vertical"
+                            android:background="@drawable/bg_button_dark"
+                            android:padding="12dp"
+                            android:layout_margin="4dp"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Ventilador"
+                                android:textColor="@color/text_muted"
+                                android:textSize="10sp"/>
+                            <TextView
+                                android:id="@+id/tvFanSpeed"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="🌀 -- %"
+                                android:textColor="@color/text_primary"
+                                android:textSize="14sp"
+                                android:textStyle="bold"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_columnWeight="1"
+                            android:orientation="vertical"
+                            android:background="@drawable/bg_button_dark"
+                            android:padding="12dp"
+                            android:layout_margin="4dp"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Disco Libre"
+                                android:textColor="@color/text_muted"
+                                android:textSize="10sp"/>
+                            <TextView
+                                android:id="@+id/tvFreeHdd"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="💾 -- GB"
+                                android:textColor="@color/text_primary"
+                                android:textSize="14sp"
+                                android:textStyle="bold"/>
+                        </LinearLayout>
+                    </GridLayout>
+                </LinearLayout>
+
+                <!-- Power Controls Card -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card"
+                    android:padding="18dp"
+                    android:layout_marginBottom="14dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🔌 Control de Energía"
+                        android:textColor="@color/text_primary"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="12dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btnReboot"
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:layout_weight="1"
+                            android:text="🔄 Reiniciar"
+                            android:background="@drawable/bg_button_dark"
+                            app:backgroundTint="@null"
+                            android:textColor="#FFB74D"
+                            android:textStyle="bold"
+                            android:layout_marginEnd="6dp"/>
+
+                        <Button
+                            android:id="@+id/btnShutdown"
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:layout_weight="1"
+                            android:text="🛑 Apagar"
+                            android:background="@drawable/bg_button_red"
+                            app:backgroundTint="@null"
+                            android:textColor="@color/text_primary"
+                            android:textStyle="bold"
+                            android:layout_marginStart="6dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- ══════════════════════════════════════
+                 SECTION: PKG & JUEGOS
+                 ══════════════════════════════════════ -->
+            <LinearLayout
+                android:id="@+id/layoutSectionPkg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <!-- PKG Installer Card -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card"
+                    android:padding="18dp"
+                    android:layout_marginBottom="14dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="📦 Instalador PKG"
+                        android:textColor="@color/neon_purple"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="4dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sube archivos .pkg por FTP a /dev_hdd0/packages/"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp"
+                        android:layout_marginBottom="14dp"/>
+
+                    <Button
+                        android:id="@+id/btnUploadPkg"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:text="📂 Seleccionar y Subir Archivo PKG"
+                        android:background="@drawable/bg_button_pkg"
+                        app:backgroundTint="@null"
+                        android:textColor="@color/text_primary"
+                        android:textStyle="bold"
+                        android:textSize="14sp"/>
+
+                    <!-- PKG Progress Container -->
+                    <LinearLayout
+                        android:id="@+id/layoutPkgProgress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        android:layout_marginTop="14dp"
+                        android:background="@drawable/bg_button_dark"
+                        android:padding="14dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="8dp">
+
+                            <TextView
+                                android:id="@+id/tvPkgFileName"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="archivo.pkg"
+                                android:textColor="@color/text_primary"
+                                android:textSize="13sp"
+                                android:singleLine="true"
+                                android:ellipsize="middle"/>
+
+                            <TextView
+                                android:id="@+id/tvPkgProgressPercent"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0%"
+                                android:textColor="@color/neon_cyan"
+                                android:textSize="13sp"
+                                android:textStyle="bold"/>
+                        </LinearLayout>
+
+                        <ProgressBar
+                            android:id="@+id/progressBarPkg"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:progressDrawable="@drawable/bg_progress_custom"
+                            android:max="100"
+                            android:progress="0"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="La subida continúa incluso si cierras la app."
+                            android:textColor="@color/text_muted"
+                            android:textSize="11sp"
+                            android:layout_marginTop="8dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Game Mount Card -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card"
+                    android:padding="18dp"
+                    android:layout_marginBottom="14dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="📀 Montar y Ejecutar Juego"
+                        android:textColor="@color/neon_cyan"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="12dp"/>
+
+                    <EditText
+                        android:id="@+id/etMountPath"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:hint="Ruta del juego (ej: /dev_hdd0/GAMES/BLES01234)"
+                        android:textColor="@color/text_primary"
+                        android:textColorHint="@color/text_muted"
+                        android:background="@drawable/bg_input"
+                        android:paddingHorizontal="14dp"
+                        android:textSize="13sp"
+                        android:layout_marginBottom="12dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btnMountGame"
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:layout_weight="1"
+                            android:text="▶ Montar Juego"
+                            android:background="@drawable/bg_button_green"
+                            app:backgroundTint="@null"
+                            android:textColor="@color/text_primary"
+                            android:textStyle="bold"
+                            android:layout_marginEnd="6dp"/>
+
+                        <Button
+                            android:id="@+id/btnUnmountGame"
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:layout_weight="1"
+                            android:text="⏹ Desmontar"
+                            android:background="@drawable/bg_button_red"
+                            app:backgroundTint="@null"
+                            android:textColor="@color/text_primary"
+                            android:textStyle="bold"
+                            android:layout_marginStart="6dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Wallpaper / Fondos Upload Card -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card"
+                    android:padding="18dp"
+                    android:layout_marginBottom="14dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🖼️ Subir Fondos de Pantalla"
+                        android:textColor="@color/neon_cyan"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="4dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sube imágenes (JPG, PNG, BMP) por FTP a la PS3"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp"
+                        android:layout_marginBottom="12dp"/>
+
+                    <EditText
+                        android:id="@+id/etWallpaperPath"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:hint="Ruta de destino (ej: /dev_hdd0/theme/)"
+                        android:text="/dev_hdd0/theme/"
+                        android:textColor="@color/text_primary"
+                        android:textColorHint="@color/text_muted"
+                        android:background="@drawable/bg_input"
+                        android:paddingHorizontal="14dp"
+                        android:textSize="13sp"
+                        android:layout_marginBottom="12dp"/>
+
+                    <Button
+                        android:id="@+id/btnUploadWallpaper"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:text="🖼️ Seleccionar y Subir Fondo"
+                        android:background="@drawable/bg_button_cyan"
+                        app:backgroundTint="@null"
+                        android:textColor="#0B0E17"
+                        android:textStyle="bold"
+                        android:textSize="14sp"/>
+
+                    <!-- Wallpaper Progress Container -->
+                    <LinearLayout
+                        android:id="@+id/layoutWallpaperProgress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        android:layout_marginTop="14dp"
+                        android:background="@drawable/bg_button_dark"
+                        android:padding="14dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="8dp">
+
+                            <TextView
+                                android:id="@+id/tvWallpaperFileName"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="fondo.jpg"
+                                android:textColor="@color/text_primary"
+                                android:textSize="13sp"
+                                android:singleLine="true"
+                                android:ellipsize="middle"/>
+
+                            <TextView
+                                android:id="@+id/tvWallpaperProgressPercent"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0%"
+                                android:textColor="@color/neon_cyan"
+                                android:textSize="13sp"
+                                android:textStyle="bold"/>
+                        </LinearLayout>
+
+                        <ProgressBar
+                            android:id="@+id/progressBarWallpaper"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:progressDrawable="@drawable/bg_progress_custom"
+                            android:max="100"
+                            android:progress="0"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- ══════════════════════════════════════
+                 SECTION: FTP EXPLORER
+                 ══════════════════════════════════════ -->
+            <LinearLayout
+                android:id="@+id/layoutSectionFtp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card"
+                    android:padding="18dp"
+                    android:layout_marginBottom="14dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="📁 Explorador FTP PS3"
+                        android:textColor="@color/neon_cyan"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="12dp"/>
+
+                    <!-- Quick Nav Buttons -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="12dp">
+
+                        <Button
+                            android:id="@+id/btnFtpGames"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:text="GAMES"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:background="@drawable/bg_button_dark"
+                            app:backgroundTint="@null"
+                            android:textColor="@color/neon_cyan"
+                            android:layout_marginEnd="4dp"/>
+
+                        <Button
+                            android:id="@+id/btnFtpIso"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:text="PS3ISO"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:background="@drawable/bg_button_dark"
+                            app:backgroundTint="@null"
+                            android:textColor="@color/neon_cyan"
+                            android:layout_marginHorizontal="4dp"/>
+
+                        <Button
+                            android:id="@+id/btnFtpPkg"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:text="PACKAGES"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:background="@drawable/bg_button_dark"
+                            app:backgroundTint="@null"
+                            android:textColor="@color/neon_cyan"
+                            android:layout_marginStart="4dp"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvFtpPath"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="📍 Ruta: /dev_hdd0/"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp"
+                        android:layout_marginBottom="8dp"/>
+
+                    <TextView
+                        android:id="@+id/tvFtpList"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:background="@drawable/bg_input"
+                        android:padding="12dp"
+                        android:text="Presiona un botón para explorar archivos FTP..."
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp"
+                        android:fontFamily="monospace"
+                        android:scrollbars="vertical"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- ══════════════════════════════════════
+                 SECTION: CONTROLES & TV
+                 ══════════════════════════════════════ -->
+            <LinearLayout
+                android:id="@+id/layoutSectionControls"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <!-- TV Notification Card -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card"
+                    android:padding="18dp"
+                    android:layout_marginBottom="14dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="📺 Notificaciones en TV"
+                        android:textColor="@color/text_primary"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="12dp"/>
+
+                    <EditText
+                        android:id="@+id/etPopupMsg"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:hint="Mensaje para proyectar en la TV..."
+                        android:textColor="@color/text_primary"
+                        android:textColorHint="@color/text_muted"
+                        android:background="@drawable/bg_input"
+                        android:paddingHorizontal="14dp"
+                        android:textSize="13sp"
+                        android:layout_marginBottom="12dp"/>
+
+                    <Button
+                        android:id="@+id/btnSendPopup"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="📡 Proyectar en PS3 TV"
+                        android:background="@drawable/bg_button_cyan"
+                        app:backgroundTint="@null"
+                        android:textColor="#0B0E17"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+                <!-- Fan Control Card -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card"
+                    android:padding="18dp"
+                    android:layout_marginBottom="14dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🌀 Control de Ventilador"
+                        android:textColor="@color/text_primary"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="12dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+
+                        <SeekBar
+                            android:id="@+id/sbFanSpeed"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:min="25"
+                            android:max="80"
+                            android:progress="35"/>
+
+                        <TextView
+                            android:id="@+id/tvFanVal"
+                            android:layout_width="48dp"
+                            android:layout_height="wrap_content"
+                            android:text="35%"
+                            android:textColor="@color/neon_cyan"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:gravity="end"
+                            android:paddingStart="8dp"/>
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btnSetFan"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:text="⚙️ Aplicar Velocidad Fan"
+                        android:background="@drawable/bg_button_pkg"
+                        app:backgroundTint="@null"
+                        android:textColor="@color/text_primary"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="10dp"/>
+
+                    <Button
+                        android:id="@+id/btnBuzzer"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:text="🔊 Pitido de la PS3"
+                        android:background="@drawable/bg_button_dark"
+                        app:backgroundTint="@null"
+                        android:textColor="@color/text_primary"/>
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
