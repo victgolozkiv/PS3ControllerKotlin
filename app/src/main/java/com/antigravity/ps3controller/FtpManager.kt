@@ -145,5 +145,95 @@ class FtpManager(private val hostProvider: () -> String) {
             Result.failure(e)
         }
     }
+
+    suspend fun createDirectory(remotePath: String): Result<Boolean> = withContext(Dispatchers.IO) {
+        val client = FTPClient()
+        try {
+            client.connect(hostProvider(), 21)
+            client.login("anonymous", "")
+            client.enterLocalPassiveMode()
+            val success = client.makeDirectory(remotePath)
+            client.logout()
+            client.disconnect()
+            if (success) Result.success(true) else Result.failure(Exception("No se pudo crear la carpeta"))
+        } catch (e: Exception) {
+            if (client.isConnected) try { client.disconnect() } catch (_: Exception) {}
+            Result.failure(e)
+        }
+    }
+
+    suspend fun deleteItem(remotePath: String, isDirectory: Boolean): Result<Boolean> = withContext(Dispatchers.IO) {
+        val client = FTPClient()
+        try {
+            client.connect(hostProvider(), 21)
+            client.login("anonymous", "")
+            client.enterLocalPassiveMode()
+            val success = if (isDirectory) client.removeDirectory(remotePath) else client.deleteFile(remotePath)
+            client.logout()
+            client.disconnect()
+            if (success) Result.success(true) else Result.failure(Exception("No se pudo eliminar la entrada"))
+        } catch (e: Exception) {
+            if (client.isConnected) try { client.disconnect() } catch (_: Exception) {}
+            Result.failure(e)
+        }
+    }
+
+    suspend fun renameItem(oldRemotePath: String, newRemotePath: String): Result<Boolean> = withContext(Dispatchers.IO) {
+        val client = FTPClient()
+        try {
+            client.connect(hostProvider(), 21)
+            client.login("anonymous", "")
+            client.enterLocalPassiveMode()
+            val success = client.rename(oldRemotePath, newRemotePath)
+            client.logout()
+            client.disconnect()
+            if (success) Result.success(true) else Result.failure(Exception("No se pudo renombrar"))
+        } catch (e: Exception) {
+            if (client.isConnected) try { client.disconnect() } catch (_: Exception) {}
+            Result.failure(e)
+        }
+    }
+
+    suspend fun downloadStream(
+        remotePath: String,
+        outputStream: java.io.OutputStream,
+        totalSize: Long,
+        onProgress: (Int) -> Unit
+    ): Result<Boolean> = withContext(Dispatchers.IO) {
+        val client = FTPClient()
+        try {
+            client.connectTimeout = 5000
+            client.connect(hostProvider(), 21)
+            client.login("anonymous", "")
+            client.enterLocalPassiveMode()
+            client.setFileType(FTPClient.BINARY_FILE_TYPE)
+
+            val inputStream = client.retrieveFileStream(remotePath)
+                ?: throw Exception("No se pudo descargar el archivo: $remotePath")
+
+            var bytesDownloaded = 0L
+            val buffer = ByteArray(16384)
+            var bytesRead: Int
+            while (inputStream.read(buffer).also { bytesRead = it } != -1) {
+                outputStream.write(buffer, 0, bytesRead)
+                bytesDownloaded += bytesRead
+                val progress = if (totalSize > 0) ((bytesDownloaded * 100) / totalSize).toInt() else 0
+                withContext(Dispatchers.Main) {
+                    onProgress(progress)
+                }
+            }
+            inputStream.close()
+            outputStream.close()
+            val completed = client.completePendingCommand()
+
+            client.logout()
+            client.disconnect()
+            Result.success(completed)
+        } catch (e: Exception) {
+            try { outputStream.close() } catch (_: Exception) {}
+            if (client.isConnected) try { client.disconnect() } catch (_: Exception) {}
+            Result.failure(e)
+        }
+    }
 }
 

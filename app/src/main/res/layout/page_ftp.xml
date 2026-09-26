@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="14dp">
+
+    <!-- Card Container for FTP Explorer -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/bg_card_ios"
+        android:padding="16dp">
+
+        <!-- Top Header & Breadcrumb -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="📁 Explorador FTP PS3"
+                android:textColor="@color/neon_cyan"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+
+            <Button
+                android:id="@+id/btnFtpUp"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="⬆️ Subir (..)"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:background="@drawable/bg_button_dark"
+                app:backgroundTint="@null"
+                android:paddingHorizontal="10dp"/>
+        </LinearLayout>
+
+        <!-- Path Bar -->
+        <TextView
+            android:id="@+id/tvFtpPath"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📍 Ruta: /dev_hdd0/"
+            android:textColor="@color/neon_yellow"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:singleLine="true"
+            android:ellipsize="start"
+            android:background="@drawable/bg_input"
+            android:padding="10dp"
+            android:layout_marginBottom="10dp"/>
+
+        <!-- Action Toolbar (Subir archivo, Nueva carpeta, Refrescar) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+
+            <Button
+                android:id="@+id/btnFtpUploadFile"
+                android:layout_width="0dp"
+                android:layout_height="42dp"
+                android:layout_weight="1"
+                android:text="➕ Subir Archivo"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:textColor="#0B0E17"
+                android:background="@drawable/bg_button_cyan"
+                app:backgroundTint="@null"
+                android:layout_marginEnd="4dp"/>
+
+            <Button
+                android:id="@+id/btnFtpNewFolder"
+                android:layout_width="0dp"
+                android:layout_height="42dp"
+                android:layout_weight="1"
+                android:text="📁 + Carpeta"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:background="@drawable/bg_button_theme"
+                app:backgroundTint="@null"
+                android:layout_marginHorizontal="2dp"/>
+
+            <Button
+                android:id="@+id/btnFtpRefresh"
+                android:layout_width="0dp"
+                android:layout_height="42dp"
+                android:layout_weight="1"
+                android:text="🔄 Refrescar"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:background="@drawable/bg_button_dark"
+                app:backgroundTint="@null"
+                android:layout_marginStart="4dp"/>
+        </LinearLayout>
+
+        <!-- Quick Access Folder Shortcuts -->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:layout_marginBottom="12dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnFtpHdd0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:text="💾 dev_hdd0"
+                    android:textSize="10sp"
+                    android:textColor="@color/text_secondary"
+                    android:background="@drawable/bg_button_dark"
+                    app:backgroundTint="@null"
+                    android:paddingHorizontal="10dp"
+                    android:layout_marginEnd="4dp"/>
+
+                <Button
+                    android:id="@+id/btnFtpGames"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:text="🎮 GAMES"
+                    android:textSize="10sp"
+                    android:textColor="@color/text_secondary"
+                    android:background="@drawable/bg_button_dark"
+                    app:backgroundTint="@null"
+                    android:paddingHorizontal="10dp"
+                    android:layout_marginEnd="4dp"/>
+
+                <Button
+                    android:id="@+id/btnFtpIso"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:text="💿 PS3ISO"
+                    android:textSize="10sp"
+                    android:textColor="@color/text_secondary"
+                    android:background="@drawable/bg_button_dark"
+                    app:backgroundTint="@null"
+                    android:paddingHorizontal="10dp"
+                    android:layout_marginEnd="4dp"/>
+
+                <Button
+                    android:id="@+id/btnFtpPkg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:text="📦 packages"
+                    android:textSize="10sp"
+                    android:textColor="@color/text_secondary"
+                    android:background="@drawable/bg_button_dark"
+                    app:backgroundTint="@null"
+                    android:paddingHorizontal="10dp"
+                    android:layout_marginEnd="4dp"/>
+
+                <Button
+                    android:id="@+id/btnFtpTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:text="🎨 theme"
+                    android:textSize="10sp"
+                    android:textColor="@color/text_secondary"
+                    android:background="@drawable/bg_button_dark"
+                    app:backgroundTint="@null"
+                    android:paddingHorizontal="10dp"/>
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <!-- Loading Indicator & File List -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvFtpFiles"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"/>
+
+            <ProgressBar
+                android:id="@+id/pbFtpLoading"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/tvFtpEmpty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Carpeta vacía o sin conectar"
+                android:textColor="@color/text_muted"
+                android:textSize="13sp"
+                android:visibility="gone"/>
+        </FrameLayout>
+    </LinearLayout>
+</LinearLayout>
